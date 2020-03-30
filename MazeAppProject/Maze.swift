@@ -22,7 +22,7 @@ class Maze {
         self.seed = seed ?? Int.random(in: 0..<100);
         
         createCells();
-        GenerateMaze(cell: cells[0][0]);
+        GenerateMaze(cell: cells[0][0], iteration: 0);
     }
     
     func createCells() -> Void {
@@ -38,8 +38,9 @@ class Maze {
     }
     
     //This is a Recursive Backtracker maze generation algorithm
-    func GenerateMaze(cell: MazeCell) -> Void {
+    func GenerateMaze(cell: MazeCell, iteration: Int) -> Void {
         cell.visited = true;
+        cell.distance = iteration;
         var neighbors = [MazeCell]();
         if (cell.row > 0) {
             neighbors.append(cells[cell.row - 1][cell.col]);
@@ -73,7 +74,7 @@ class Maze {
                         neighbor.northWall = false;
                     }
                 }
-                GenerateMaze(cell: neighbor);
+                GenerateMaze(cell: neighbor, iteration: iteration + 1);
             }
         }
     }
@@ -87,8 +88,7 @@ class Maze {
 
 struct Maze_Previews: PreviewProvider {
     static var previews: some View {
-        let maze = Maze(rows: 10, cols: 10, seed: nil)
-        
-        return maze.DrawMaze()
+        Maze(rows: 10, cols: 10, seed: nil).DrawMaze()
+        .gesture(DragGesture())
     }
 }

@@ -21,6 +21,7 @@ class MazeCell {
     var row: Int;
     var col: Int;
     var lineThickness: CGFloat;
+    var distance: Int = 0;
     
     init(row: Int, col: Int, lineThickness: CGFloat) {
         self.row = row;
@@ -30,8 +31,8 @@ class MazeCell {
     
     func DrawView() -> some View {
         ZStack {
-            Text("\(row)")
             Group {
+                Text("\(distance)")
                 if northWall {
                     GeometryReader { geo in
                         Path { path in
