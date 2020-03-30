@@ -20,15 +20,17 @@ class MazeCell {
     //Row and Column location
     var row: Int;
     var col: Int;
+    var lineThickness: CGFloat;
     
-    init(row: Int, col: Int) {
+    init(row: Int, col: Int, lineThickness: CGFloat) {
         self.row = row;
         self.col = col;
+        self.lineThickness = lineThickness;
     }
     
     func DrawView() -> some View {
         ZStack {
-            Text("\(String(self.visited))")
+            Text("\(row)")
             Group {
                 if northWall {
                     GeometryReader { geo in
@@ -36,7 +38,7 @@ class MazeCell {
                             path.move(to: CGPoint(x: 0, y: 0))
                             path.addLine(to: CGPoint(x: geo.size.width, y: 0))
                         }
-                        .stroke(Color.black, lineWidth: 10)
+                        .stroke(Color.black, lineWidth: self.lineThickness )
                     }
                 }
                 if southWall {
@@ -45,7 +47,7 @@ class MazeCell {
                             path.move(to: CGPoint(x: 0, y: geo.size.height))
                             path.addLine(to: CGPoint(x: geo.size.width, y: geo.size.height))
                         }
-                        .stroke(Color.black, lineWidth: 10)
+                        .stroke(Color.black, lineWidth: self.lineThickness )
                     }
                 }
                 if eastWall {
@@ -54,7 +56,7 @@ class MazeCell {
                             path.move(to: CGPoint(x: geo.size.width, y: 0))
                             path.addLine(to: CGPoint(x: geo.size.width, y: geo.size.height))
                         }
-                        .stroke(Color.black, lineWidth: 10)
+                        .stroke(Color.black, lineWidth: self.lineThickness)
                     }
                 }
                 if westWall {
@@ -63,7 +65,7 @@ class MazeCell {
                             path.move(to: CGPoint(x: 0, y: 0))
                             path.addLine(to: CGPoint(x: 0, y: geo.size.height))
                         }
-                        .stroke(Color.black, lineWidth: 10)
+                        .stroke(Color.black, lineWidth: self.lineThickness)
                     }
                 }
             }
@@ -71,26 +73,10 @@ class MazeCell {
     }
 }
 
-struct MazeCellView: View {
-    var body: some View {
-        GeometryReader { geo in
-            Path { path in
-                path.move(to: CGPoint(x: 0, y: 0))
-                path.addLine(to: CGPoint(x: 0, y: geo.size.height))
-                path.addLine(to: CGPoint(x: geo.size.width, y: geo.size.height))
-                path.addLine(to: CGPoint(x: geo.size.width, y: 0))
-                path.addLine(to: CGPoint(x: 0, y: 0))
-                path.addLine(to: CGPoint(x: 0, y: geo.size.height))
-            }
-            .stroke(Color.black, lineWidth: 10)
-        }
-    }
-}
-
 struct MazeCell_Previews: PreviewProvider {
     static var previews: some View {
         MazeView(rows:10, columns: 5) { row, col in
-            MazeCellView()
+            MazeCell(row: row, col: col, lineThickness: 10).DrawView()
         }
     }
 }

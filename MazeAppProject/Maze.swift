@@ -32,7 +32,7 @@ class Maze {
             cells.append([]);
             for numC in 0..<cols {
                 //Fill that array with MazeCell objects each iteration
-                cells[numR].append(MazeCell.init(row: numR, col: numC))
+                cells[numR].append(MazeCell.init(row: numR, col: numC, lineThickness: 10))
             }
         }
     }
@@ -58,17 +58,17 @@ class Maze {
             if (!neighbor.visited) {
                 if (cell.row == neighbor.row) {
                     if (cell.col == neighbor.col + 1) {
-                        cell.eastWall = false;
-                        neighbor.westWall = false;
-                    } else if (cell.col == neighbor.col - 1) {
                         cell.westWall = false;
                         neighbor.eastWall = false;
+                    } else {
+                        cell.eastWall = false;
+                        neighbor.westWall = false;
                     }
-                } else if (cell.col == neighbor.col) {
+                } else {
                     if (cell.row == neighbor.row + 1) {
                         cell.northWall = false;
                         neighbor.southWall = false;
-                    } else if (cell.row == neighbor.row - 1) {
+                    } else {
                         cell.southWall = false;
                         neighbor.northWall = false;
                     }
@@ -87,6 +87,8 @@ class Maze {
 
 struct Maze_Previews: PreviewProvider {
     static var previews: some View {
-        Maze(rows: 5, cols: 5, seed: nil).DrawMaze()
+        let maze = Maze(rows: 10, cols: 10, seed: nil)
+        
+        return maze.DrawMaze()
     }
 }
