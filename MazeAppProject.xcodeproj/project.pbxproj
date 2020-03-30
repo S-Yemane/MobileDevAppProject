@@ -15,6 +15,9 @@
 		7A70E44C242B180B00EA6F53 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A70E44A242B180B00EA6F53 /* LaunchScreen.storyboard */; };
 		7A70E457242B180B00EA6F53 /* MazeAppProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A70E456242B180B00EA6F53 /* MazeAppProjectTests.swift */; };
 		7A70E462242B180B00EA6F53 /* MazeAppProjectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A70E461242B180B00EA6F53 /* MazeAppProjectUITests.swift */; };
+		7A70E470242B184500EA6F53 /* Maze.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A70E46F242B184500EA6F53 /* Maze.swift */; };
+		7A70E472242B184D00EA6F53 /* MazeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A70E471242B184D00EA6F53 /* MazeCell.swift */; };
+		7AA96C9A2431840700967382 /* MazeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AA96C992431840700967382 /* MazeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +52,9 @@
 		7A70E45D242B180B00EA6F53 /* MazeAppProjectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MazeAppProjectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A70E461242B180B00EA6F53 /* MazeAppProjectUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MazeAppProjectUITests.swift; sourceTree = "<group>"; };
 		7A70E463242B180B00EA6F53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7A70E46F242B184500EA6F53 /* Maze.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Maze.swift; sourceTree = "<group>"; };
+		7A70E471242B184D00EA6F53 /* MazeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MazeCell.swift; sourceTree = "<group>"; };
+		7AA96C992431840700967382 /* MazeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MazeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +85,7 @@
 		7A70E433242B180A00EA6F53 = {
 			isa = PBXGroup;
 			children = (
+				7AA96C9C243193D900967382 /* Images */,
 				7A70E43E242B180A00EA6F53 /* MazeAppProject */,
 				7A70E455242B180B00EA6F53 /* MazeAppProjectTests */,
 				7A70E460242B180B00EA6F53 /* MazeAppProjectUITests */,
@@ -102,6 +109,9 @@
 				7A70E43F242B180A00EA6F53 /* AppDelegate.swift */,
 				7A70E441242B180A00EA6F53 /* SceneDelegate.swift */,
 				7A70E443242B180A00EA6F53 /* ContentView.swift */,
+				7A70E46F242B184500EA6F53 /* Maze.swift */,
+				7AA96C992431840700967382 /* MazeView.swift */,
+				7A70E471242B184D00EA6F53 /* MazeCell.swift */,
 				7A70E445242B180B00EA6F53 /* Assets.xcassets */,
 				7A70E44A242B180B00EA6F53 /* LaunchScreen.storyboard */,
 				7A70E44D242B180B00EA6F53 /* Info.plist */,
@@ -134,6 +144,13 @@
 				7A70E463242B180B00EA6F53 /* Info.plist */,
 			);
 			path = MazeAppProjectUITests;
+			sourceTree = "<group>";
+		};
+		7AA96C9C243193D900967382 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -269,7 +286,10 @@
 			files = (
 				7A70E440242B180A00EA6F53 /* AppDelegate.swift in Sources */,
 				7A70E442242B180A00EA6F53 /* SceneDelegate.swift in Sources */,
+				7A70E470242B184500EA6F53 /* Maze.swift in Sources */,
+				7AA96C9A2431840700967382 /* MazeView.swift in Sources */,
 				7A70E444242B180A00EA6F53 /* ContentView.swift in Sources */,
+				7A70E472242B184D00EA6F53 /* MazeCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
