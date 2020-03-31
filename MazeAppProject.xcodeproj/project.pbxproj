@@ -18,6 +18,7 @@
 		7A70E470242B184500EA6F53 /* Maze.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A70E46F242B184500EA6F53 /* Maze.swift */; };
 		7A70E472242B184D00EA6F53 /* MazeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A70E471242B184D00EA6F53 /* MazeCell.swift */; };
 		7AA96C9A2431840700967382 /* MazeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AA96C992431840700967382 /* MazeView.swift */; };
+		7AA96C9E2431C22A00967382 /* MazeNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AA96C9D2431C22A00967382 /* MazeNavigator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		7A70E46F242B184500EA6F53 /* Maze.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Maze.swift; sourceTree = "<group>"; };
 		7A70E471242B184D00EA6F53 /* MazeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MazeCell.swift; sourceTree = "<group>"; };
 		7AA96C992431840700967382 /* MazeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MazeView.swift; sourceTree = "<group>"; };
+		7AA96C9D2431C22A00967382 /* MazeNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MazeNavigator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +112,7 @@
 				7A70E441242B180A00EA6F53 /* SceneDelegate.swift */,
 				7A70E443242B180A00EA6F53 /* ContentView.swift */,
 				7A70E46F242B184500EA6F53 /* Maze.swift */,
+				7AA96C9D2431C22A00967382 /* MazeNavigator.swift */,
 				7AA96C992431840700967382 /* MazeView.swift */,
 				7A70E471242B184D00EA6F53 /* MazeCell.swift */,
 				7A70E445242B180B00EA6F53 /* Assets.xcassets */,
@@ -290,6 +293,7 @@
 				7AA96C9A2431840700967382 /* MazeView.swift in Sources */,
 				7A70E444242B180A00EA6F53 /* ContentView.swift in Sources */,
 				7A70E472242B184D00EA6F53 /* MazeCell.swift in Sources */,
+				7AA96C9E2431C22A00967382 /* MazeNavigator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

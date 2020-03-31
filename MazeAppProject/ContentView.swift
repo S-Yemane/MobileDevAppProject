@@ -10,9 +10,7 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        MazeView(rows:4, columns: 5) { row, col in
-            Image(systemName: "\(row * 10 + col).circle").resizable()
-        }
+        Maze(rows: 10, cols: 10, seed: nil).DrawMaze()
     }
 }
 

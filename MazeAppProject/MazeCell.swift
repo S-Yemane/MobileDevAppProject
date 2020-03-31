@@ -13,10 +13,12 @@ class MazeCell {
     var visited = false;
     
     //Bools to keep track of what walls are present
-    var northWall = true;
-    var southWall = true;
-    var eastWall = true;
-    var westWall = true;
+    var northWall: Bool = true;
+    var southWall: Bool = true;
+    var eastWall: Bool = true;
+    var westWall: Bool = true;
+    //Bool to know if the navigator is in this cell or not
+    var navigator: Bool = false;
     //Row and Column location
     var row: Int;
     var col: Int;
@@ -32,7 +34,13 @@ class MazeCell {
     func DrawView() -> some View {
         ZStack {
             Group {
-                Text("\(distance)")
+                //Text("\(distance)").font(.system(size: 10))
+                if navigator {
+                    GeometryReader { geo in
+                        Circle()
+                            //.frame(width: 100, height: 100)
+                    }
+                }
                 if northWall {
                     GeometryReader { geo in
                         Path { path in
@@ -77,7 +85,7 @@ class MazeCell {
 struct MazeCell_Previews: PreviewProvider {
     static var previews: some View {
         MazeView(rows:10, columns: 5) { row, col in
-            MazeCell(row: row, col: col, lineThickness: 10).DrawView()
+            MazeCell(row: row, col: col, lineThickness: 1).DrawView()
         }
     }
 }
