@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        Maze(rows: 10, cols: 10, seed: nil).DrawMaze()
+        MainMenuView()
     }
 }
 

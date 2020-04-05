@@ -34,12 +34,8 @@ class MazeCell {
     func DrawView() -> some View {
         ZStack {
             Group {
-                //Text("\(distance)").font(.system(size: 10))
                 if navigator {
-                    GeometryReader { geo in
-                        Circle()
-                            //.frame(width: 100, height: 100)
-                    }
+                    Circle()
                 }
                 if northWall {
                     GeometryReader { geo in

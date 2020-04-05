@@ -98,11 +98,17 @@ class Maze {
         .onEnded { _ in
             if offset.width > 100 {
                 self.SwipeRight()
-                print(String("Swipe Left/Right"))
+                print(String("Swipe Right"))
+            } else if offset.width < -100 {
+                self.SwipeLeft()
+                print(String("Swipe Left"))
             }
             if offset.height > 100 {
                 self.SwipeDown()
-                print(String("Swipe Up/Down"))
+                print(String("Swipe Down"))
+            } else if offset.height < -100 {
+                self.SwipeUp()
+                print(String("Swipe Up"))
             }
         })
     }
