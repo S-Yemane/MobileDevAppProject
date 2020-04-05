@@ -22,13 +22,11 @@ class MazeCell {
     //Row and Column location
     var row: Int;
     var col: Int;
-    var lineThickness: CGFloat;
-    var distance: Int = 0;
+    var lineThickness: CGFloat = 5
     
-    init(row: Int, col: Int, lineThickness: CGFloat) {
+    init(row: Int, col: Int) {
         self.row = row;
         self.col = col;
-        self.lineThickness = lineThickness;
     }
     
     func DrawView() -> some View {
@@ -78,10 +76,11 @@ class MazeCell {
     }
 }
 
+
 struct MazeCell_Previews: PreviewProvider {
     static var previews: some View {
-        MazeView(rows:10, columns: 5) { row, col in
-            MazeCell(row: row, col: col, lineThickness: 1).DrawView()
+        MazeView(rows:5, columns: 5) { row, col in
+            MazeCell(row: row, col: col).DrawView()
         }
     }
 }

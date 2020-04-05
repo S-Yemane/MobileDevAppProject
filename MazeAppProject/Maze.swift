@@ -19,6 +19,8 @@ class Maze {
     
     var navigator: MazeNavigator;
     
+    @State var moved: [Int] = []
+    
     init(rows: Int, cols: Int, seed: Int?) {
         self.rows = rows;
         self.cols = cols;
@@ -28,7 +30,7 @@ class Maze {
         self.navigator = MazeNavigator(row: 0, col: 0)
         
         createCells();
-        GenerateMaze(cell: cells[0][0], iteration: 0);
+        GenerateMaze(cell: cells[0][0]);
     }
     
     func createCells() -> Void {
@@ -38,16 +40,15 @@ class Maze {
             cells.append([]);
             for numC in 0..<cols {
                 //Fill that array with MazeCell objects each iteration
-                cells[numR].append(MazeCell.init(row: numR, col: numC, lineThickness: 2))
+                cells[numR].append(MazeCell.init(row: numR, col: numC))
             }
         }
-        cells[0][0].navigator = true
+        cells[0][0].navigator.toggle()
     }
     
     //This is a Recursive Backtracker maze generation algorithm
-    func GenerateMaze(cell: MazeCell, iteration: Int) -> Void {
+    func GenerateMaze(cell: MazeCell) -> Void {
         cell.visited = true;
-        cell.distance = iteration;
         var neighbors = [MazeCell]();
         if (cell.row > 0) {
             neighbors.append(cells[cell.row - 1][cell.col]);
@@ -81,15 +82,14 @@ class Maze {
                         neighbor.northWall = false;
                     }
                 }
-                GenerateMaze(cell: neighbor, iteration: iteration + 1);
+                GenerateMaze(cell: neighbor);
             }
         }
     }
     
     func DrawMaze() -> some View {
         var offset: CGSize = CGSize.init()
-        return MazeView(rows: self.rows, columns: self.cols) { row, col in
-            self.cells[row][col].DrawView()
+        return MazeView(rows: self.rows, columns: self.cols) { row, col in self.cells[row][col].DrawView()
         }
         .gesture(DragGesture()
             .onChanged { gesture in
@@ -119,6 +119,7 @@ class Maze {
             print(String("Can't go that way user!"))
             return
         }
+        self.moved.append(2)
         let x = navigator.row
         var y = navigator.col - 1
         while cells[x][y].northWall && cells[x][y].southWall && !cells[x][y].westWall {
@@ -137,6 +138,7 @@ class Maze {
             print(String("Can't go that way user!"))
             return
         }
+        self.moved.append(2)
         let x = navigator.row
         var y = navigator.col + 1
         while cells[x][y].northWall && cells[x][y].southWall && !cells[x][y].eastWall {
@@ -147,6 +149,7 @@ class Maze {
         cells[navigator.row][navigator.col].navigator = false
         cells[x][y].navigator = true
         navigator.MoveNavigator(row: x, col: y)
+        
     }
     
     func SwipeUp() -> Void {
@@ -155,6 +158,7 @@ class Maze {
             print(String("Can't go that way user!"))
             return
         }
+        self.moved.append(2)
         var x = navigator.row - 1
         let y = navigator.col
         while cells[x][y].westWall && cells[x][y].eastWall && !cells[x][y].northWall {
@@ -173,6 +177,7 @@ class Maze {
             print(String("Can't go that way user!"))
             return
         }
+        self.moved.append(2)
         var x = navigator.row + 1
         let y = navigator.col
         while cells[x][y].westWall && cells[x][y].eastWall && !cells[x][y].southWall {
@@ -188,6 +193,6 @@ class Maze {
 
 struct Maze_Previews: PreviewProvider {
     static var previews: some View {
-        Maze(rows: 10, cols: 10, seed: nil).DrawMaze()
+        Maze(rows: 5, cols: 5, seed: nil).DrawMaze()
     }
 }

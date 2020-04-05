@@ -17,11 +17,6 @@ class MazeNavigator {
         self.col = col;
     }
     
-    func DrawNavigator() -> some View {
-        return Circle()
-            .fill(Color.yellow)
-    }
-    
     func MoveNavigator(row: Int, col: Int) -> Void {
         self.row = row
         self.col = col
