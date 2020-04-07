@@ -16,10 +16,9 @@ class Maze {
     var cols: Int;
     
     var seed: Int;
+    var finalCell: MazeCell;
     
-    var navigator: MazeNavigator;
-    
-    @State var moved: [Int] = []
+    @State var navigator: MazeNavigator = MazeNavigator(row: 0, col: 0);
     
     init(rows: Int, cols: Int, seed: Int?) {
         self.rows = rows;
@@ -27,10 +26,11 @@ class Maze {
         //Seed is either the given value, or a random int
         self.seed = seed ?? Int.random(in: 0..<100);
         
-        self.navigator = MazeNavigator(row: 0, col: 0)
+        finalCell = MazeCell(row: 0, col: 0)
         
         createCells();
-        GenerateMaze(cell: cells[0][0]);
+        GenerateMaze(cell: cells[0][0], iteration: 1);
+        FindEnd()
     }
     
     func createCells() -> Void {
@@ -40,15 +40,16 @@ class Maze {
             cells.append([]);
             for numC in 0..<cols {
                 //Fill that array with MazeCell objects each iteration
-                cells[numR].append(MazeCell.init(row: numR, col: numC))
+                cells[numR].append(MazeCell(row: numR, col: numC))
             }
         }
         cells[0][0].navigator.toggle()
     }
     
     //This is a Recursive Backtracker maze generation algorithm
-    func GenerateMaze(cell: MazeCell) -> Void {
+    func GenerateMaze(cell: MazeCell, iteration: Int) -> Void {
         cell.visited = true;
+        cell.iteration = iteration
         var neighbors = [MazeCell]();
         if (cell.row > 0) {
             neighbors.append(cells[cell.row - 1][cell.col]);
@@ -67,50 +68,45 @@ class Maze {
             if (!neighbor.visited) {
                 if (cell.row == neighbor.row) {
                     if (cell.col == neighbor.col + 1) {
-                        cell.westWall = false;
-                        neighbor.eastWall = false;
+                        cells[cell.row][cell.col].westWall = false;
+                        cells[neighbor.row][neighbor.col].eastWall = false;
                     } else {
-                        cell.eastWall = false;
-                        neighbor.westWall = false;
+                        cells[cell.row][cell.col].eastWall = false;
+                        cells[neighbor.row][neighbor.col].westWall = false;
                     }
                 } else {
                     if (cell.row == neighbor.row + 1) {
-                        cell.northWall = false;
-                        neighbor.southWall = false;
+                        cells[cell.row][cell.col].northWall = false;
+                        cells[neighbor.row][neighbor.col].southWall = false;
                     } else {
-                        cell.southWall = false;
-                        neighbor.northWall = false;
+                        cells[cell.row][cell.col].southWall = false;
+                        cells[neighbor.row][neighbor.col].northWall = false;
                     }
                 }
-                GenerateMaze(cell: neighbor);
+                GenerateMaze(cell: neighbor, iteration: iteration + 1);
             }
         }
     }
     
-    func DrawMaze() -> some View {
-        var offset: CGSize = CGSize.init()
-        return MazeView(rows: self.rows, columns: self.cols) { row, col in self.cells[row][col].DrawView()
-        }
-        .gesture(DragGesture()
-            .onChanged { gesture in
-                offset = gesture.translation
-        }
-        .onEnded { _ in
-            if offset.width > 100 {
-                self.SwipeRight()
-                print(String("Swipe Right"))
-            } else if offset.width < -100 {
-                self.SwipeLeft()
-                print(String("Swipe Left"))
+    func FindEnd() -> Void {
+        var row: Int = 0
+        var col: Int = 0
+        var num: Int = 0
+        for numR in 0..<self.rows {
+            for numC in 0..<self.cols {
+                if self.cells[numR][numC].iteration > num {
+                    num = self.cells[numR][numC].iteration
+                    row = numR
+                    col = numC
+                }
             }
-            if offset.height > 100 {
-                self.SwipeDown()
-                print(String("Swipe Down"))
-            } else if offset.height < -100 {
-                self.SwipeUp()
-                print(String("Swipe Up"))
-            }
-        })
+        }
+        cells[row][col].end = true
+        finalCell = cells[row][col]
+    }
+    
+    func FinishedMaze() -> Void {
+        
     }
     
     func SwipeLeft() -> Void {
@@ -119,7 +115,6 @@ class Maze {
             print(String("Can't go that way user!"))
             return
         }
-        self.moved.append(2)
         let x = navigator.row
         var y = navigator.col - 1
         while cells[x][y].northWall && cells[x][y].southWall && !cells[x][y].westWall {
@@ -138,7 +133,6 @@ class Maze {
             print(String("Can't go that way user!"))
             return
         }
-        self.moved.append(2)
         let x = navigator.row
         var y = navigator.col + 1
         while cells[x][y].northWall && cells[x][y].southWall && !cells[x][y].eastWall {
@@ -158,7 +152,6 @@ class Maze {
             print(String("Can't go that way user!"))
             return
         }
-        self.moved.append(2)
         var x = navigator.row - 1
         let y = navigator.col
         while cells[x][y].westWall && cells[x][y].eastWall && !cells[x][y].northWall {
@@ -177,7 +170,6 @@ class Maze {
             print(String("Can't go that way user!"))
             return
         }
-        self.moved.append(2)
         var x = navigator.row + 1
         let y = navigator.col
         while cells[x][y].westWall && cells[x][y].eastWall && !cells[x][y].southWall {
@@ -191,8 +183,44 @@ class Maze {
     }
 }
 
+struct MazeGameView: View {
+    var rows: Int
+    var cols: Int
+    var body: some View {
+        var offset: CGSize = CGSize.init()
+        let maze = Maze(rows: self.rows, cols: self.cols, seed: nil)
+        return MazeView(rows: self.rows, columns: self.cols) { row, col in
+            MazeCellView(cell: maze.cells[row][col])
+        }
+        .gesture(DragGesture()
+            .onChanged { gesture in
+                offset = gesture.translation
+        }
+        .onEnded { _ in
+            if offset.width > 100 {
+                maze.SwipeRight()
+                print(String("Swipe Right"))
+            } else if offset.width < -100 {
+                maze.SwipeLeft()
+                print(String("Swipe Left"))
+            }
+            if offset.height > 100 {
+                maze.SwipeDown()
+                print(String("Swipe Down"))
+            } else if offset.height < -100 {
+                maze.SwipeUp()
+                print(String("Swipe Up"))
+            }
+        })
+    }
+    init(rows: Int, cols: Int) {
+        self.rows = rows
+        self.cols = cols
+    }
+}
+
 struct Maze_Previews: PreviewProvider {
     static var previews: some View {
-        Maze(rows: 5, cols: 5, seed: nil).DrawMaze()
+        MazeGameView(rows: 10, cols: 10)
     }
 }

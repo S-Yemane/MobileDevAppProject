@@ -37,6 +37,6 @@ struct MazeView<Content: View>: View {
 
 struct MazeView_Previews: PreviewProvider {
     static var previews: some View {
-        Maze(rows: 10, cols: 10, seed: nil).DrawMaze()
+        MazeGameView(rows: 10, cols: 10)
     }
 }

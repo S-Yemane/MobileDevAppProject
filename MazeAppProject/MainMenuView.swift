@@ -12,24 +12,29 @@ struct MainMenuView: View {
     @State var playingGame: Bool = false
     
     var body: some View {
-        Group {
-            if playingGame {
-                Maze(rows: 10, cols: 10, seed: nil).DrawMaze()
-            } else {
-                VStack {
-                    Button(action: {
-                        self.playingGame.toggle()
-                    }) {
-                        Text("Play")
+        NavigationView {
+                NavigationLink(destination: MazeGameView(rows: 10, cols: 10)) {
+                    Text("Play")
+                        .font(.title)
                     }
-                }
             }
-        }
     }
 }
 
 struct MainMenuView_Previews: PreviewProvider {
     static var previews: some View {
         MainMenuView()
+    }
+}
+
+struct GradientBackgroundStyle: ButtonStyle {
+    func makeBody(configuration: Self.Configuration) -> some View {
+        configuration.label
+            .frame(minWidth: 0, maxWidth: .infinity)
+            .padding()
+            .foregroundColor(.white)
+            .background(Color.black)
+            .cornerRadius(40)
+            .padding(.horizontal, 20)
     }
 }
